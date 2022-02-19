@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<title>Options</title>
+        <link rel="stylesheet" href="options.css"> 
+    </head>
+    <body>
+        <div id="buttonDiv">
+		</div>
+		<div>
+			<p>Log in to your account!</p>
+		</div>
+
+        <form action="https://free-speechify.auth.us-west-2.amazoncognito.com" method="post" class="form-example">
+            <div class="form-example">
+                <label for="username">Enter your username: </label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-example">
+                <label for="password">Enter your password: </label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="form-example">
+                <input type="submit" value="Log in!">
+            </div>
+        </form>
+    </body>
+    <script src="options.js"></script>
+</html>

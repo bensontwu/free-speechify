@@ -1,0 +1,20 @@
+{
+	"name": "Free Speechify",
+	"description": "Clone of Speechify that is 'free'.",
+	"version": "1.0",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {},
+	"commands": {
+		"_execute_action": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+F",
+				"mac": "MacCtrl+Shift+F"
+			},
+			"description": "Opens hello.html"
+		}
+	},
+	"permissions": [ "activeTab", "scripting", "tts" ]
+}
