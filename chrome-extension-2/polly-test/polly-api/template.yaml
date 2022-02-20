@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  polly-api
+
+  Sample SAM Template for polly-api
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  PollyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Auth:
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: Basic usage plan to restrict access for create, update, and delete methods.
+      Description: API for ML Use Case Finder database
+      StageName: prod
+  PollyApiFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        PostSpeech:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /speech
+            Method: post
+            RestApiId: !Ref PollyApi
+      Policies: 
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: polly:SynthesizeSpeech
+              Resource: '*'
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  PollyApi:
+    Description: "API Gateway endpoint URL for Prod stage for Polly API function"
+    Value: !Sub "https://${PollyApi}.execute-api.${AWS::Region}.amazonaws.com/prod/speech/"
+  PollyApiFunction:
+    Description: "Polly API Lambda Function ARN"
+    Value: !GetAtt PollyApiFunction.Arn
+  PollyApiFunctionRole:
+    Description: "Implicit IAM Role created for Polly API function"
+    Value: !GetAtt PollyApiFunctionRole.Arn
