@@ -9,13 +9,15 @@ from contextlib import closing
 session = Session()
 polly = session.client("polly")
 
-def proxy_response(status_code: int, message: str) -> dict:
+def proxy_response(status_code: int, body: base64) -> dict:
     return {
+        "headers": {
+            'Access-Control-Allow-Headers': 'Content-Type,X-Api-Key',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
         "statusCode": status_code,
-        "body": json.dumps({
-            "message": message,
-            # "location": ip.text.replace("\n", "")
-        }),
+        "body": body
     }
     
 
@@ -54,6 +56,7 @@ def lambda_handler(event, context):
     if 'AudioStream' in response:
         with closing(response['AudioStream']) as stream:
             encoded_data = base64.b64encode(stream.read())
-            return proxy_response(200, encoded_data.decode('ascii'))
+            # return proxy_response(200, encoded_data.decode('ascii'))
+            return proxy_response(200, encoded_data)
     else:
         return proxy_response(500, 'Failed to get audio data from proxy')

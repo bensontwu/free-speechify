@@ -10,8 +10,8 @@
 	"commands": {
 		"_execute_action": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+F",
-				"mac": "MacCtrl+Shift+F"
+				"default": "Ctrl+Shift+S",
+				"mac": "MacCtrl+Shift+S"
 			},
 			"description": "Opens hello.html"
 		}

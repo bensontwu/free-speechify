@@ -20,6 +20,10 @@ Resources:
           Description: Basic usage plan to restrict access for create, update, and delete methods.
       Description: API for ML Use Case Finder database
       StageName: prod
+      Cors:
+        AllowHeaders: "'Content-Type,X-Api-Key'"
+        AllowMethods: "'GET,POST,OPTIONS'"
+        AllowOrigin: "'*'"
   PollyApiFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
